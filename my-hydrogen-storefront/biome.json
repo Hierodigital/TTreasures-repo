@@ -1,0 +1,68 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
+  "extends": ["@weaverse/biome"],
+  "linter": {
+    "rules": {
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "style": {
+        "useThrowNewError": "warn",
+        "useFilenamingConvention": "off",
+        "useNamingConvention": "off",
+        "noParameterAssign": "off",
+        "noMagicNumbers": "off",
+        "noDescendingSpecificity": "off",
+        "useConsistentTypeDefinitions": "off",
+        "noNestedTernary": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "useAwait": "off",
+        "noConsole": "off",
+        "noAlert": "off",
+        "noArrayIndexKey": "off"
+      },
+      "nursery": {
+        "useConsistentArrowReturn": "off",
+        "noUnnecessaryConditions": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "off",
+        "useUniqueElementIds": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": {
+            "maxAllowedComplexity": 50
+          }
+        },
+        "noExcessiveLinesPerFunction": "off"
+      },
+      "a11y": {
+        "noNoninteractiveElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "noStaticElementInteractions": "off"
+      }
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedAttributes": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  }
+}
