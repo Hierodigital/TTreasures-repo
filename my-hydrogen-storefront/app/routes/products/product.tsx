@@ -1,3 +1,4 @@
+import { Gift, Package, ShieldCheck, Truck } from "@phosphor-icons/react";
 import {
   Analytics,
   getAdjacentAndFirstAvailableVariants,
@@ -5,7 +6,7 @@ import {
   useOptimisticVariant,
 } from "@shopify/hydrogen";
 import { getSelectedProductOptions } from "@weaverse/hydrogen";
-import { useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import type { LoaderFunctionArgs, MetaArgs } from "react-router";
 import { useLoaderData } from "react-router";
 import type { ProductQuery } from "storefront-api.generated";
@@ -132,6 +133,30 @@ export default function Product() {
   return (
     <>
       <WeaverseContent />
+      <section className="mx-auto mt-8 mb-16 w-full max-w-(--page-width) px-4 md:px-6">
+        <div className="grid gap-4 rounded-2xl border border-(--color-line-subtle) bg-white/70 p-5 md:grid-cols-4 md:gap-6 md:p-6">
+          <TasteePromiseItem
+            icon={<Truck className="h-5 w-5" />}
+            title="Fast U.S. shipping"
+            description="Free shipping on orders over $75."
+          />
+          <TasteePromiseItem
+            icon={<ShieldCheck className="h-5 w-5" />}
+            title="Freshness promise"
+            description="Small-batch products prepared for each drop."
+          />
+          <TasteePromiseItem
+            icon={<Gift className="h-5 w-5" />}
+            title="Gift-ready options"
+            description="Great for birthdays, thank-yous, and holidays."
+          />
+          <TasteePromiseItem
+            icon={<Package className="h-5 w-5" />}
+            title="Secure delivery"
+            description="Carefully packed to arrive in perfect condition."
+          />
+        </div>
+      </section>
       {selectedVariant && (
         <Analytics.ProductView
           data={{
@@ -150,5 +175,27 @@ export default function Product() {
         />
       )}
     </>
+  );
+}
+
+function TasteePromiseItem({
+  icon,
+  title,
+  description,
+}: {
+  icon: ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="mt-0.5 rounded-full bg-[#F7E7DA] p-2 text-[#A64B2A]">
+        {icon}
+      </div>
+      <div>
+        <p className="font-medium text-[#2D221A]">{title}</p>
+        <p className="text-sm text-[#6D5442]">{description}</p>
+      </div>
+    </div>
   );
 }
