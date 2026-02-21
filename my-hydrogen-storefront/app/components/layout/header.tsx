@@ -1,8 +1,8 @@
-import { MagnifyingGlassIcon, UserIcon } from "@phosphor-icons/react";
+import { UserIcon } from "@phosphor-icons/react";
 import { useThemeSettings } from "@weaverse/hydrogen";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import {
   Await,
   useLocation,
@@ -10,22 +10,23 @@ import {
   useRouteLoaderData,
 } from "react-router";
 import useWindowScroll from "react-use/esm/useWindowScroll";
-import { CartDrawer } from "~/components/cart/cart-drawer";
 import Link from "~/components/link";
+import { Logo } from "~/components/logo";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
 import { DEFAULT_LOCALE } from "~/utils/const";
-import { Logo } from "./logo";
-import { DesktopMenu } from "./menu/desktop-menu";
-import { MobileMenu } from "./menu/mobile-menu";
-import { PredictiveSearchButton } from "./predictive-search";
+import { CartDrawer } from "./cart-drawer";
+import { DesktopMenu } from "./desktop-menu";
+import { MobileMenu } from "./mobile-menu";
+import { PredictiveSearchButtonDesktop } from "./predictive-search/search-desktop";
+import { PredictiveSearchButtonMobile } from "./predictive-search/search-mobile";
 
 const variants = cva("", {
   variants: {
     width: {
-      full: "h-full w-full",
-      stretch: "h-full w-full",
-      fixed: "mx-auto h-full w-full max-w-(--page-width)",
+      full: "h-(--height-nav) w-full",
+      stretch: "h-(--height-nav) w-full",
+      fixed: "mx-auto h-(--height-nav) w-full max-w-(--page-width)",
     },
     padding: {
       full: "",
@@ -43,6 +44,7 @@ function useIsHomeCheck() {
 }
 
 export function Header() {
+  let [isSearchOpen, setIsSearchOpen] = useState(false);
   const { enableTransparentHeader, headerWidth } = useThemeSettings();
   const isHome = useIsHomeCheck();
   const { y } = useWindowScroll();
@@ -50,18 +52,18 @@ export function Header() {
 
   const scrolled = y >= 50;
   const enableTransparent = enableTransparentHeader && isHome && !routeError;
-  const isTransparent = enableTransparent && !scrolled;
+  const isTransparent = enableTransparent && !scrolled && !isSearchOpen;
 
   return (
     <header
       className={cn(
-        "z-10 w-full",
+        "z-20 w-full",
         "transition-all duration-300 ease-in-out",
-        "bg-(--color-header-bg) hover:bg-(--color-header-bg)",
+        "bg-(--color-header-bg) hover:bg-(--color-header-bg-hover)",
         "text-(--color-header-text) hover:text-(--color-header-text)",
-        "border-line-subtle border-b",
+        "border-line-subtle border-b backdrop-blur-md",
         variants({ padding: headerWidth }),
-        scrolled ? "shadow-header" : "shadow-none",
+        scrolled ? "shadow-lg shadow-[#2D221A14]" : "shadow-none",
         enableTransparent
           ? [
               "group/header fixed w-screen",
@@ -76,8 +78,8 @@ export function Header() {
               "[&_.cart-count]:bg-(--color-transparent-header-text)",
               "hover:[&_.cart-count]:bg-(--color-header-text)",
               "hover:[&_.cart-count]:text-(--color-transparent-header-text)",
-              "[&_.main-logo]:opacity-0 hover:[&_.main-logo]:opacity-100",
-              "[&_.transparent-logo]:opacity-100 hover:[&_.transparent-logo]:opacity-0",
+              "[&_.main-logo]:opacity-0",
+              "[&_.transparent-logo]:opacity-100",
             ]
           : [
               "[&_.cart-count]:text-(--color-header-bg)",
@@ -89,19 +91,17 @@ export function Header() {
     >
       <div
         className={cn(
-          "flex h-(--height-nav) items-center justify-between gap-2 py-1.5 lg:gap-8 lg:py-3",
+          "flex items-center justify-between gap-2 rounded-full px-2 lg:gap-8",
           variants({ width: headerWidth }),
         )}
       >
         <MobileMenu />
-        <Link to="/search" className="p-1.5 lg:hidden">
-          <MagnifyingGlassIcon className="h-5 w-5" />
-        </Link>
+        <PredictiveSearchButtonMobile setIsSearchOpen={setIsSearchOpen} />
         <Logo />
         <DesktopMenu />
         <div className="z-1 flex items-center gap-1">
-          <PredictiveSearchButton />
-          <AccountLink className="relative flex h-8 w-8 items-center justify-center" />
+          <PredictiveSearchButtonDesktop setIsSearchOpen={setIsSearchOpen} />
+          <AccountLink className="relative flex h-9 w-9 items-center justify-center rounded-full border border-(--color-line-subtle) bg-white/60 transition-colors hover:bg-white" />
           <CartDrawer />
         </div>
       </div>
