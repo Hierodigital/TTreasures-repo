@@ -17,6 +17,38 @@ import {
   NoteDialog,
 } from "./cart-summary-actions";
 
+const FREE_SHIPPING_THRESHOLD = 75; // USD
+
+function FreeShippingBar({ total }: { total: number }) {
+  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - total);
+  const progress = Math.min(100, (total / FREE_SHIPPING_THRESHOLD) * 100);
+  const achieved = remaining === 0;
+
+  return (
+    <div className="mb-4 rounded-md bg-neutral-50 px-3 py-2.5 text-sm">
+      <p className="mb-1.5 text-center font-medium">
+        {achieved ? (
+          <span className="text-green-600">🎉 You&apos;ve unlocked free shipping!</span>
+        ) : (
+          <>
+            Add{" "}
+            <span className="font-semibold">
+              ${remaining.toFixed(2)}
+            </span>{" "}
+            more for <span className="font-semibold">free shipping</span>
+          </>
+        )}
+      </p>
+      <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200">
+        <div
+          className="h-full rounded-full bg-green-500 transition-all duration-500"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function CartSummary({
   cart,
   layout,
@@ -53,6 +85,9 @@ export function CartSummary({
     isOptimistic ||
     dcRemoveFetcher.state !== "idle" ||
     gcRemoveFetcher.state !== "idle";
+
+  const cartTotal = parseFloat(cost?.totalAmount?.amount ?? "0");
+
   return (
     <div
       className={clsx(
@@ -64,6 +99,10 @@ export function CartSummary({
       <h2 id="summary-heading" className="sr-only">
         Order summary
       </h2>
+
+      {/* Free Shipping Progress Bar */}
+      <FreeShippingBar total={cartTotal} />
+
       {appliedGiftCards?.length > 0 && (
         <div className="mb-4 flex flex-wrap justify-end gap-2">
           {appliedGiftCards.map((giftCard) => {
@@ -122,12 +161,10 @@ export function CartSummary({
                 .filter((d) => d.applicable)
                 .map((d) => d.code);
               const updatedCodes = codes.filter((c) => c !== discount.code);
-
               // Check if this specific discount is being removed
               const isDCRemoving =
                 dcRemoveFetcher.state !== "idle" &&
                 removingDiscountCode === discount.code;
-
               return (
                 <div
                   key={discount.code}
