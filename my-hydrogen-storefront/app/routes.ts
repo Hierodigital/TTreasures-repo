@@ -46,6 +46,7 @@ export default hydrogenRoutes([
     ]),
     ...prefix("collections", [
       index("routes/collections/list.tsx"),
+      route("all", "routes/collections/all.ts"),
       route(":collectionHandle", "routes/collections/collection.tsx"),
     ]),
     ...prefix("products", [
