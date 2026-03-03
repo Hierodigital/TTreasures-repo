@@ -21,7 +21,9 @@ export async function loader({
         ...getPaginationVariables(request, { pageBy: 16 }),
         country: storefront.i18n.country,
         language: storefront.i18n.language,
-        query: maybeFilterOutCombinedListingsQuery,
+        query: ["available_for_sale:true", maybeFilterOutCombinedListingsQuery]
+  .filter(Boolean)
+  .join(" AND "),
       },
     }),
     weaverse.loadPage({ type: "ALL_PRODUCTS" }),
