@@ -3,8 +3,8 @@ import * as Heading from "~/components/heading";
 import * as Link from "~/components/link";
 import * as Paragraph from "~/components/paragraph";
 import * as SubHeading from "~/components/subheading";
-import * as AliReview from "~/sections/ali-reviews";
-import * as AliReviewList from "~/sections/ali-reviews/review-list";
+// import * as AliReview from "~/sections/ali-reviews";
+// import * as AliReviewList from "~/sections/ali-reviews/review-list";
 import * as AllProducts from "~/sections/all-products";
 import * as BlogPost from "~/sections/blog-post";
 import * as Blogs from "~/sections/blogs";
@@ -30,11 +30,11 @@ import * as ImageGalleryItems from "~/sections/image-gallery/items";
 import * as ImageWithText from "~/sections/image-with-text";
 import * as ImageWithTextContent from "~/sections/image-with-text/content";
 import * as ImageWithTextImage from "~/sections/image-with-text/image";
-import * as JudgemeReview from "~/sections/judgeme-reviews";
-import * as JudgemeReviewList from "~/sections/judgeme-reviews/review-list";
-import * as JudgemeReviewSummary from "~/sections/judgeme-reviews/review-summary";
+// import * as JudgemeReview from "~/sections/judgeme-reviews";
+// import * as JudgemeReviewList from "~/sections/judgeme-reviews/review-list";
+// import * as JudgemeReviewSummary from "~/sections/judgeme-reviews/review-summary";
 import * as MainProduct from "~/sections/main-product";
-import * as JudgemeStarsRating from "~/sections/main-product/judgeme-stars-rating";
+// import * as JudgemeStarsRating from "~/sections/main-product/judgeme-stars-rating";
 import * as ProductATCButtons from "~/sections/main-product/product-atc-buttons";
 import * as ProductBadges from "~/sections/main-product/product-badges";
 import * as ProductBreadcrumb from "~/sections/main-product/product-breadcrumb";
@@ -72,8 +72,8 @@ export const components: HydrogenComponent[] = [
   Heading,
   Paragraph,
   Link,
-  AliReview,
-  AliReviewList,
+  // AliReview,
+  // AliReviewList,
   AllProducts,
   BlogPost,
   Blogs,
@@ -126,10 +126,10 @@ export const components: HydrogenComponent[] = [
   CollectionList,
   CollectionListItems,
   SingleProduct,
-  JudgemeStarsRating,
-  JudgemeReview,
-  JudgemeReviewSummary,
-  JudgemeReviewList,
+  // JudgemeStarsRating,
+  // JudgemeReview,
+  // JudgemeReviewSummary,
+  // JudgemeReviewList,
   OurTeam,
   OurTeamMembers,
   SlideShow,
